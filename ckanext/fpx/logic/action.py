@@ -19,7 +19,18 @@ def fpx_order_ticket(context, data_dict):
     if not items:
         raise tk.ValidationError({'items': ['Cannot be empty']})
     tk.check_access('fpx_order_ticket', context, data_dict)
-    url = urljoin(tk.h.fpx_service_url(), '/ticket/generate')
+    url = urljoin(tk.h.fpx_service_url(), 'ticket/generate')
+    if type_ == 'package':
+        type = 'url'
+        pkg = tk.get_action('package_show')(None, {'id': items})
+        items = [r['url'] for r in pkg['resources']]
+    elif type_ == 'resource':
+        type = 'url'
+        items = [
+            tk.get_action('resource_show')(None, {'id': r['id']})['url']
+            for r in items
+        ]
+
     data = {
         'type': type_,
         'items': items

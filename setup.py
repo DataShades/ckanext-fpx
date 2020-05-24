@@ -16,7 +16,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version='0.0.1',
+    version='0.0.5',
 
     description='''''',
     long_description=long_description,
@@ -41,9 +41,6 @@ setup(
         # 5 - Production/Stable
         'Development Status :: 4 - Beta',
 
-        # Pick your license as you wish (should match "license" above)
-        'License :: OSI Approved :: GNU Affero General Public License v3 or'\
-        'later (AGPLv3+)',
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
@@ -76,6 +73,7 @@ setup(
     # have to be included in MANIFEST.in as well.
     include_package_data=True,
     package_data={
+        'ckanext.fpx': ['fanstatic/**/*']
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
