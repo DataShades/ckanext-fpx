@@ -1,0 +1,14 @@
+{% ckan_extends %}
+
+{% block page %}
+    <div hidden
+         data-module="fpx-queue-manager"
+         data-module-service-url="{{ h.fpx_service_url() }}"></div>
+    {{ super() }}
+{% endblock page %}
+
+
+{% block scripts %}
+    {{ super() }}
+    {% snippet 'fpx/snippets/queue_manager_' ~ ('resource' if h.ckan_version() < '2.9' else 'asset') ~ '.html' %}
+{% endblock scripts %}

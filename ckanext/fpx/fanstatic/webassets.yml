@@ -1,0 +1,8 @@
+queue_manager:
+  filter: rjsmin
+  output: ckanext-fpx/%(version)s-fpx-queue-manager.js
+  extra:
+    preload:
+        base/main
+  contents:
+    - scripts/fpx-queue-manager.js
