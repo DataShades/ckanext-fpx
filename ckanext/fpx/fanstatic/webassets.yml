@@ -1,10 +1,24 @@
-queue_manager:
+fpx_toast_styles:
+  output: ckanext-fpx/%(version)s-fpx-toast-styles.css
+  contents:
+    - styles/fpx-toast-styles.css
+
+fpx_queue_manager:
   filter: rjsmin
   output: ckanext-fpx/%(version)s-fpx-queue-manager.js
   extra:
     preload:
-        base/main
+        - base/main
   contents:
     - scripts/fpx-queue-manager.js
+
+fpx_toast:
+  filter: rjsmin
+  output: ckanext-fpx/%(version)s-fpx-toast.js
+  extra:
+    preload:
+        - base/main
+        - fpx/fpx_toast_styles
+  contents:
     - scripts/fpx-position-tracker-toast.js
     - scripts/fpx-download-starting-toast.js

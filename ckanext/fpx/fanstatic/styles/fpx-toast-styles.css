@@ -1,0 +1,29 @@
+.fpx-toast {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    z-index: 1;
+    padding: 16px;
+    max-width: 500px;
+    transform: scale(0);
+    transform-origin: right bottom;
+    transition: transform .3s ease-in-out;
+}
+.fpx-toast.visible {
+    transform: scale(1);
+}
+.fpx-toast .toast-inner {
+    border-radius: 5px;
+    background: white;
+    padding: 15px;
+    box-shadow: 2px 3px 8px gray;
+}
+.fpx-toast .toast-inner .heading {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.fpx-toast .toast-inner .content .position {
+    font-weight: bold;
+}

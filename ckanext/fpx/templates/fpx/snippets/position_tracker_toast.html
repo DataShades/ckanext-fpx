@@ -4,7 +4,7 @@ heading - title of the toast
 content - body of the toast
 #}
 
-{% set wrapper_class = wrapper_class or 'fpx-position-tracker-toast' %}
+{% set wrapper_class = wrapper_class or 'fpx-toast' %}
 
 {% set heading = heading or _('Download in queue. Do not close this page.') %}
 
@@ -24,11 +24,13 @@ content - body of the toast
 {% endif %}
 
 <div class="{{ wrapper_class }}" data-module="fpx-position-tracker-toast">
-    <div class="heading">
-        {{ heading }}
-    </div>
+    <div class="toast-inner">
+        <div class="heading">
+            {{ heading }}
+        </div>
 
-    <div class="content">
-        {{ content }}
+        <div class="content">
+            {{ content }}
+        </div>
     </div>
 </div>

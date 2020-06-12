@@ -5,7 +5,7 @@ content - body of the toast
 #}
 
 
-{% set wrapper_class = wrapper_class or 'fpx-download-starting-toast' %}
+{% set wrapper_class = wrapper_class or 'fpx-toast' %}
 
 {% set heading = heading or _('Download started...') %}
 
@@ -21,11 +21,13 @@ content - body of the toast
 {% endif %}
 
 <div class="{{ wrapper_class }}" data-module="fpx-download-starting-toast">
-    <div class="heading">
-        {{ heading }}
-    </div>
+    <div class="toast-inner">
+        <div class="heading">
+            {{ heading }}
+        </div>
 
-    <div class="content">
-        {{ content }}
+        <div class="content">
+            {{ content }}
+        </div>
     </div>
 </div>

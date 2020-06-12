@@ -10,5 +10,5 @@
 
 {% block scripts %}
     {{ super() }}
-    {% snippet 'fpx/snippets/queue_manager_' ~ ('resource' if h.ckan_version() < '2.9' else 'asset') ~ '.html' %}
+    {% snippet 'fpx/snippets/static.html', name='fpx_queue_manager' %}
 {% endblock scripts %}
