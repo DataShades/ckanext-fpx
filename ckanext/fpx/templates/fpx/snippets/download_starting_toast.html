@@ -1,0 +1,31 @@
+{#
+wrapper_class - class added to the div wrapping whole toast
+heading - title of the toast
+content - body of the toast
+#}
+
+
+{% set wrapper_class = wrapper_class or 'fpx-download-starting-toast' %}
+
+{% set heading = heading or _('Download started...') %}
+
+{% if not content %}
+    {% set content %}
+    <p>
+        {% trans %}
+        Your download will start automatically in a few seconds.
+        {% endtrans %}
+
+    </p>
+    {% endset %}
+{% endif %}
+
+<div class="{{ wrapper_class }}" data-module="fpx-download-starting-toast">
+    <div class="heading">
+        {{ heading }}
+    </div>
+
+    <div class="content">
+        {{ content }}
+    </div>
+</div>

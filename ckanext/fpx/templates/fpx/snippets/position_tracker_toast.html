@@ -1,0 +1,34 @@
+{#
+wrapper_class - class added to the div wrapping whole toast
+heading - title of the toast
+content - body of the toast
+#}
+
+{% set wrapper_class = wrapper_class or 'fpx-position-tracker-toast' %}
+
+{% set heading = heading or _('Download in queue. Do not close this page.') %}
+
+{% if not content %}
+    {% set content %}
+        <p>
+            {% trans %}
+            Downloads on our site are currently at full capacity. You
+            are number
+            <span class="position">0</span>
+            in the queue. Do not close this page, or you’ll lose your
+            place in the queue. Your download will start automatically
+            as soon as you reach the front of the queue.
+            {% endtrans %}
+        </p>
+    {% endset %}
+{% endif %}
+
+<div class="{{ wrapper_class }}" data-module="fpx-position-tracker-toast">
+    <div class="heading">
+        {{ heading }}
+    </div>
+
+    <div class="content">
+        {{ content }}
+    </div>
+</div>
