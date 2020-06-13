@@ -1,0 +1,1 @@
+Scalar value as `items` argument for `fpx_order_ticket` is deprecated. Use list of ids instead
