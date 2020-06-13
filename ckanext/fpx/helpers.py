@@ -21,7 +21,7 @@ def fpx_service_url():
         raise CkanConfigurationException(
             "Missing `{}`".format(_service_url_key)
         )
-    return url
+    return url.rstrip('/') + '/'
 
 
 def fpx_client_secret():

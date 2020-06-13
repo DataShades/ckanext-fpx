@@ -7,7 +7,6 @@ from ckanext.fpx.logic import action, auth
 
 class FpxPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
-    plugins.implements(plugins.IConfigurable)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
@@ -18,11 +17,6 @@ class FpxPlugin(plugins.SingletonPlugin):
         toolkit.add_template_directory(config_, "templates")
         toolkit.add_public_directory(config_, "public")
         toolkit.add_resource("fanstatic", "fpx")
-
-    # IConfigurable
-
-    def configure(self, config):
-        toolkit.h.fpx_service_url()
 
     # ITemplateHelpers
 
