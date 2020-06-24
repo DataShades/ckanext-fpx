@@ -6,6 +6,7 @@ ckan.module("fpx-queue-manager", function ($) {
   ckan.TOPICS.FPX_TICKET_AVAILABLE = "fpx:ticket:available";
   ckan.TOPICS.FPX_POSITION_UPDATED = "fpx:ticket:position-updated";
   ckan.TOPICS.FPX_CANCEL_DOWNLOAD = "fpx:download:cancel";
+  ckan.TOPICS.FPX_DOWNLOAD_STARTED = "fpx:download:started";
 
   return {
     options: {
@@ -79,6 +80,7 @@ ckan.module("fpx-queue-manager", function ($) {
     },
     _onAvailable: function (url) {
       window.location.href = url;
+      this.sandbox.publish(ckan.TOPICS.FPX_DOWNLOAD_STARTED, url);
     },
 
     _ticketOrdered: function (data) {
