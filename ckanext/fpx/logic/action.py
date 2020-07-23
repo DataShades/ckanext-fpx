@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import json
-
+import base64
 import requests
 
 from six.moves.urllib.parse import urljoin
@@ -19,9 +19,14 @@ def get_actions():
 
 def fpx_order_ticket(context, data_dict):
     type_ = tk.get_or_bust(data_dict, "type")
-    items = data_dict.get("items", [])
+    items = data_dict.get("items", '')
     if not items:
         raise tk.ValidationError({"items": ["Cannot be empty"]})
+    try:
+        items = json.loads(base64.decodestring(items))
+    except ValueError:
+        raise tk.ValidationError({"items": ["Must be a base64-decoded JSON-string"]})
+
     tk.check_access("fpx_order_ticket", context, data_dict)
     url = urljoin(tk.h.fpx_service_url(), "ticket/generate")
     if type_ == "package":
@@ -52,7 +57,7 @@ def fpx_order_ticket(context, data_dict):
             for r in items
         ]
 
-    data = {"type": type_, "items": items}
+    data = {"type": type_, "items": base64.encodestring(json.dumps(items))}
 
     headers = {}
     secret = tk.h.fpx_client_secret()

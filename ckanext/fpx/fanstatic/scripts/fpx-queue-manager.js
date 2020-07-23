@@ -48,7 +48,7 @@ ckan.module("fpx-queue-manager", function ($) {
       this.sandbox.client.call(
         "POST",
         "fpx_order_ticket",
-        { type: type, items: items },
+        { type: type, items: window.btoa(JSON.stringify(items)) },
         this._ticketOrdered,
         console.error
       );
