@@ -42,7 +42,7 @@ def fpx_order_ticket(context, data_dict):
             for item in items
         ])]
         result = tk.get_action("package_search")(
-            None, {"fq_list": fq_list}
+            None, {"fq_list": fq_list, "include_private": True}
         )
 
         items = [
@@ -56,7 +56,18 @@ def fpx_order_ticket(context, data_dict):
             tk.get_action("resource_show")(None, {"id": r["id"]})["url"]
             for r in items
         ]
-
+    items = [
+        item if isinstance(item, dict) else dict(url=item)
+        for item in items
+    ]
+    try:
+        user = tk.get_action('user_show')(None, {'id': context['user']})
+    except tk.ObjectNotFound:
+        user = None
+    if user:
+        headers = {'Authorization': user['apikey']}
+        for item in items:
+            item.setdefault('headers', {}).update(headers)
     data = {"type": type_, "items": base64.encodestring(json.dumps(items))}
 
     headers = {}
