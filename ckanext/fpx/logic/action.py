@@ -3,6 +3,7 @@ import logging
 import json
 import base64
 import requests
+import six
 
 from six.moves.urllib.parse import urljoin
 import ckan.plugins.toolkit as tk
@@ -23,7 +24,7 @@ def fpx_order_ticket(context, data_dict):
     if not items:
         raise tk.ValidationError({"items": ["Cannot be empty"]})
     try:
-        items = json.loads(base64.decodestring(items))
+        items = json.loads(base64.decodestring(six.ensure_binary(items)))
     except ValueError:
         raise tk.ValidationError({"items": ["Must be a base64-decoded JSON-string"]})
 
@@ -68,7 +69,7 @@ def fpx_order_ticket(context, data_dict):
         headers = {'Authorization': user['apikey']}
         for item in items:
             item.setdefault('headers', {}).update(headers)
-    data = {"type": type_, "items": base64.encodestring(json.dumps(items))}
+    data = {"type": type_, "items": base64.encodestring(six.ensure_binary(json.dumps(items)))}
 
     headers = {}
     secret = tk.h.fpx_client_secret()
