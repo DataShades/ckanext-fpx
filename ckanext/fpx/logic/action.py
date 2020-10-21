@@ -68,6 +68,8 @@ def fpx_order_ticket(context, data_dict):
     if user:
         headers = {'Authorization': user['apikey']}
         for item in items:
+            if not tk.h.url_is_local(item['url']):
+                continue
             item.setdefault('headers', {}).update(headers)
     data = {"type": type_, "items": base64.encodestring(six.ensure_binary(json.dumps(items)))}
 
