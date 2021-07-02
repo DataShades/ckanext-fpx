@@ -13,3 +13,8 @@ issue_format = "{issue}"
 directory = "removal"
 name = "Deprecations and removals"
 showcontent = true
+
+[[tool.towncrier.type]]
+directory = "feature"
+name = "New features"
+showcontent = true
