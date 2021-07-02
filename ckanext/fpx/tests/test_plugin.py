@@ -1,6 +1,7 @@
-"""Tests for plugin.py."""
-import ckanext.fpx.plugin as plugin
+import pytest
+import ckan.plugins as p
 
 
-def test_plugin():
-    pass
+@pytest.mark.usefixtures("with_plugins")
+def test_plugin_loaded():
+    assert p.plugin_loaded("fpx")

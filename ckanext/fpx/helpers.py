@@ -4,9 +4,11 @@ from ckan.exceptions import CkanConfigurationException
 
 import ckan.plugins.toolkit as tk
 
-_service_url_key = "fpx.service.url"
-_client_secret_key = "fpx.client.secret"
+CONFIG_URL = "ckanext.fpx.service.url"
+CONFIG_URL_LEGASY = "fpx.service.url"
 
+CONFIG_SECRET = "ckanext.fpx.client.secret"
+CONFIG_SECRET_LEGACY = "fpx.client.secret"
 
 def get_helpers():
     return {
@@ -16,13 +18,14 @@ def get_helpers():
 
 
 def fpx_service_url():
-    url = tk.config.get(_service_url_key)
+    url = tk.config.get(CONFIG_URL) or tk.config.get(CONFIG_URL_LEGASY)
+
     if not url:
         raise CkanConfigurationException(
-            "Missing `{}`".format(_service_url_key)
+            "Missing `{}`".format(CONFIG_URL)
         )
     return url.rstrip('/') + '/'
 
 
 def fpx_client_secret():
-    return tk.config.get(_client_secret_key)
+    return tk.config.get(CONFIG_SECRET) or tk.config.get(CONFIG_SECRET_LEGACY)
