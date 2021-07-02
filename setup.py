@@ -7,7 +7,7 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the relevant file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
@@ -20,7 +20,7 @@ setup(
 
     description='''''',
     long_description=long_description,
-    long_description_content_type='text/x-rst',
+    long_description_content_type='text/markdown',
 
     # The project's main homepage.
     url='https://github.com/DataShades/'\
@@ -44,10 +44,9 @@ setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ],
 
 
@@ -60,20 +59,20 @@ setup(
         namespace_packages=['ckanext'],
 
     install_requires=[
-        "six>=1.13.0"
       # CKAN extensions should not list dependencies here, but in a separate
       # ``requirements.txt`` file.
       #
       # http://docs.ckan.org/en/latest/extensions/best-practices.html
       # add-third-party-libraries-to-requirements-txt
     ],
+    python_requires=">=3.7",
 
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
     include_package_data=True,
     package_data={
-        'ckanext.fpx': ['fanstatic/**/*']
+        'ckanext.fpx': ['assets/**/*']
     },
 
     # Although 'package_data' is the preferred approach, in some case you may

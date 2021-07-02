@@ -5,9 +5,9 @@ content - body of the toast
 #}
 
 
-{% set wrapper_class = wrapper_class or 'fpx-toast' %}
+{% set wrapper_class = wrapper_class|default('fpx-toast') %}
 
-{% set heading = heading or _('Download started...') %}
+{% set heading = heading|default(_('Download started...')) %}
 
 {% if not content %}
     {% set content %}
@@ -15,7 +15,6 @@ content - body of the toast
         {% trans %}
         Your download will start automatically in a few seconds.
         {% endtrans %}
-
     </p>
     {% endset %}
 {% endif %}

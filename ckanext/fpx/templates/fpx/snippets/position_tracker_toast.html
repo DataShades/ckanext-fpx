@@ -4,9 +4,9 @@ heading - title of the toast
 content - body of the toast
 #}
 
-{% set wrapper_class = wrapper_class or 'fpx-toast' %}
+{% set wrapper_class = wrapper_class|default('fpx-toast') %}
 
-{% set heading = heading or _('Download in queue. Do not close this page.') %}
+{% set heading = heading|default(_('Download in queue. Do not close this page.')) %}
 
 {% if not content %}
     {% set content %}

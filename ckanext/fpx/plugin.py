@@ -2,7 +2,7 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
 from ckanext.fpx import helpers
-from ckanext.fpx.logic import action, auth
+from ckanext.fpx.logic import action, auth, validators
 
 
 class FpxPlugin(plugins.SingletonPlugin):
@@ -10,13 +10,14 @@ class FpxPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
+    plugins.implements(plugins.IValidators)
 
     # IConfigurer
 
     def update_config(self, config_):
         toolkit.add_template_directory(config_, "templates")
         toolkit.add_public_directory(config_, "public")
-        toolkit.add_resource("fanstatic", "fpx")
+        toolkit.add_resource("assets", "fpx")
 
     # ITemplateHelpers
 
@@ -32,3 +33,8 @@ class FpxPlugin(plugins.SingletonPlugin):
 
     def get_auth_functions(self):
         return auth.get_auth_functions()
+
+    # IValidators
+
+    def get_validators(self):
+        return validators.get_validators()
