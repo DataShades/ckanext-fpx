@@ -25,6 +25,7 @@ def order_ticket(context, data_dict):
     url = urljoin(tk.h.fpx_service_url(), "ticket/generate")
     type_ = data_dict["type"]
     items = data_dict["items"]
+
     if type_ == "package":
         type_ = "url"
         if not isinstance(items, list):
@@ -65,6 +66,10 @@ def order_ticket(context, data_dict):
         user = None
 
     if user:
+        if not user["apikey"]:
+            log.info("Generating API Key for user %s", user["name"])
+            tk.get_action("user_generate_apikey")({}, {"id": user["id"]})
+
         headers = {"Authorization": user["apikey"]}
         for item in items:
             if not tk.h.url_is_local(item["url"]):
