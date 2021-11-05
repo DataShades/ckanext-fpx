@@ -44,11 +44,16 @@ ckan.module("fpx-queue-manager", function ($) {
       this.sandbox.unsubscribe(ckan.TOPICS.FPX_CANCEL_DOWNLOAD);
     },
 
-    _onOrder: function (type, items) {
+    _onOrder: function (type, items, options) {
+      var payload = {
+        type: type,
+        items: window.btoa(JSON.stringify(items)),
+        options: window.btoa(JSON.stringify(options || {})),
+      };
       this.sandbox.client.call(
         "POST",
         "fpx_order_ticket",
-        { type: type, items: window.btoa(JSON.stringify(items)) },
+        payload,
         this._ticketOrdered,
         console.error
       );
