@@ -25,6 +25,7 @@ def order_ticket(context, data_dict):
     url = urljoin(tk.h.fpx_service_url(), "ticket/generate")
     type_ = data_dict["type"]
     items = data_dict["items"]
+    options = data_dict.get("options", {})
 
     if type_ == "package":
         type_ = "url"
@@ -79,6 +80,7 @@ def order_ticket(context, data_dict):
     data = {
         "type": type_,
         "items": base64.encodebytes(bytes(json.dumps(items), "utf8")),
+        "options": base64.encodebytes(bytes(json.dumps(options), "utf8")),
     }
     headers = {}
     secret = tk.h.fpx_client_secret()
