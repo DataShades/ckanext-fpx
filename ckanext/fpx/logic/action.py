@@ -9,6 +9,7 @@ import ckan.plugins.toolkit as tk
 from ckan.logic import validate
 
 from . import schema
+from .. import utils
 
 log = logging.getLogger(__name__)
 
@@ -83,7 +84,7 @@ def order_ticket(context, data_dict):
         "options": base64.encodebytes(bytes(json.dumps(options), "utf8")),
     }
     headers = {}
-    secret = tk.h.fpx_client_secret()
+    secret = utils.client_secret()
     if secret:
         headers["authorize"] = secret
 

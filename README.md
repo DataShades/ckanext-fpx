@@ -26,6 +26,11 @@ To install ckanext-fpx:
     # (required).
 	fpx.client.secret = 123abc
 
+    # Name corresponding to the secret. Required only for file-streaming.
+    # (optional).
+	fpx.client.secret = client-name-for-123abc-secret
+
+
     # URL of the running FPX service
     # (required).
     fpx.service.url = http://0.0.0.0:8000
