@@ -1,7 +1,7 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
-from ckanext.fpx import helpers
+from ckanext.fpx import helpers, views
 from ckanext.fpx.logic import action, auth, validators
 
 
@@ -11,6 +11,12 @@ class FpxPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
     plugins.implements(plugins.IValidators)
+    plugins.implements(plugins.IBlueprint)
+
+    # IBlueprint
+
+    def get_blueprint(self):
+        return views.get_blueprints()
 
     # IConfigurer
 

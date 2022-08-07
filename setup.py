@@ -2,15 +2,12 @@
 from setuptools import setup
 
 setup(
-
-    package_data={
-        'ckanext.fpx': ['assets/**/*']
-    },
+    package_data={"ckanext.fpx": ["assets/**/*"]},
     message_extractors={
-        'ckanext': [
-            ('**.py', 'python', None),
-            ('**.js', 'javascript', None),
-            ('**/templates/**.html', 'ckan', None),
+        "ckanext": [
+            ("**.py", "python", None),
+            ("**.js", "javascript", None),
+            ("**/templates/**.html", "ckan", None),
         ],
-    }
+    },
 )

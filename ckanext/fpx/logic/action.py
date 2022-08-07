@@ -70,7 +70,9 @@ def order_ticket(context, data_dict):
     if user:
         if not user["apikey"]:
             log.info("Generating API Key for user %s", user["name"])
-            user = tk.get_action("user_generate_apikey")({}, {"id": user["id"]})
+            user = tk.get_action("user_generate_apikey")(
+                {}, {"id": user["id"]}
+            )
 
         headers = {"Authorization": user["apikey"]}
         for item in items:

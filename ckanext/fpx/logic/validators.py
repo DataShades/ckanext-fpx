@@ -7,15 +7,15 @@ import ckan.plugins.toolkit as tk
 
 def get_validators():
     return {
-        "fpx_base64_json": base64_json,
+        "fpx_base64_json_if_string": base64_json_if_string,
     }
 
 
-def base64_json(value):
-    try:
-        binary = bytes(value, "utf8")
-    except TypeError:
-        raise tk.Invalid("Must be a string")
+def base64_json_if_string(value):
+    if not isinstance(value, str):
+        return value
+    binary = bytes(value, "utf8")
+
     try:
         decoded = base64.decodebytes(binary)
     except binascii.Error:

@@ -1,20 +1,3 @@
 [tool.black]
+preview = true
 line-length = 79
-
-[tool.towncrier]
-directory = "changes"
-package = "ckanext.fpx"
-package_dir = "ckanext/fpx"
-filename = "CHANGELOG.rst"
-title_format = "{version} ({project_date})"
-issue_format = "{issue}"
-
-[[tool.towncrier.type]]
-directory = "removal"
-name = "Deprecations and removals"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "feature"
-name = "New features"
-showcontent = true

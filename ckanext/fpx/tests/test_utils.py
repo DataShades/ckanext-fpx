@@ -1,6 +1,7 @@
 import pytest
 from ckanext.fpx import utils
 
+
 @pytest.mark.usefixtures("with_plugins")
 class TestFpxClientSecret(object):
     def test_secret_is_missing(self):

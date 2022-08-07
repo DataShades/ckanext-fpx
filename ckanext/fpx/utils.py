@@ -10,13 +10,16 @@ CONFIG_SECRET = "fpx.client.secret"
 CONFIG_NAME = "fpx.client.name"
 
 
-
 def client_secret():
     secret = tk.config.get(CONFIG_SECRET)
     if not secret:
         secret = tk.config.get(CONFIG_SECRET_LEGACY)
         if secret:
-            log.warning("Config option `%s` is deprecated. Use `%s` instead", CONFIG_SECRET_LEGACY, CONFIG_SECRET)
+            log.warning(
+                "Config option `%s` is deprecated. Use `%s` instead",
+                CONFIG_SECRET_LEGACY,
+                CONFIG_SECRET,
+            )
 
     return secret
 
