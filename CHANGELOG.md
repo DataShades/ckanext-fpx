@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/datashades/ckanext-fpx/compare/v0.5.0...v0.5.1) (2022-08-08)
+
+
+### Bug Fixes
+
+* use zip-type of tickets by default ([80d2477](https://github.com/datashades/ckanext-fpx/commit/80d2477d76a4383a3ea279c55c3f19bdf0463fb5))
+
 ## [0.5.0](https://github.com/DataShades/ckanext-fpx/compare/v0.4.1...v0.5.0) (2022-08-07)
 
 
