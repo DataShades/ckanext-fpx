@@ -24,5 +24,5 @@ def resource_download(id: str, resource_id: str):
     id_ = ticket["id"]
 
     return tk.redirect_to(
-        tk.h.fpx_service_url() + f"ticket/{id_}/download/single"
+        tk.h.fpx_service_url() + f"ticket/{id_}/download"
     )

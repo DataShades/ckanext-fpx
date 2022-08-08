@@ -29,7 +29,7 @@ def order_ticket(context, data_dict):
     options = data_dict.get("options", {})
 
     if type_ == "package":
-        type_ = "url"
+        type_ = "zip"
         if not isinstance(items, list):
             log.warning(
                 "Passing items as scalar value when type set to 'package' is "
@@ -52,7 +52,7 @@ def order_ticket(context, data_dict):
         ]
 
     elif type_ == "resource":
-        type_ = "url"
+        type_ = "zip"
         items = [
             tk.get_action("resource_show")(None, {"id": r["id"]})["url"]
             for r in items
@@ -79,6 +79,10 @@ def order_ticket(context, data_dict):
             if not tk.h.url_is_local(item["url"]):
                 continue
             item.setdefault("headers", {}).update(headers)
+
+    if type_ == "url":
+        log.warning("`url` type of FPX tickets is deprecated. Use `zip` instead")
+        type_ = "zip"
 
     data = {
         "type": type_,
