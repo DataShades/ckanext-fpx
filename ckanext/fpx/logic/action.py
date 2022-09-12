@@ -23,7 +23,7 @@ def get_actions():
 @validate(schema.order_ticket)
 def order_ticket(context, data_dict):
     tk.check_access("fpx_order_ticket", context, data_dict)
-    url = urljoin(tk.h.fpx_service_url(), "ticket/generate")
+    url = urljoin(tk.h.fpx_service_url(internal=True), "ticket/generate")
     type_ = data_dict["type"]
     items = data_dict["items"]
     options = data_dict.get("options", {})

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 import logging
 
@@ -14,6 +16,7 @@ log = logging.getLogger(__name__)
 
 CONFIG_URL_LEGACY = "ckanext.fpx.service.url"
 CONFIG_URL = "fpx.service.url"
+CONFIG_INTERNAL_URL = "fpx.service.internal_url"
 
 
 def get_helpers():
@@ -23,7 +26,7 @@ def get_helpers():
     }
 
 
-def fpx_service_url():
+def fpx_service_url(*, internal: bool = False):
     url = tk.config.get(CONFIG_URL)
     if not url:
         url = tk.config.get(CONFIG_URL_LEGACY)
@@ -33,6 +36,12 @@ def fpx_service_url():
                 CONFIG_URL_LEGACY,
                 CONFIG_URL,
             )
+
+    if internal:
+        internal_url = tk.config.get(CONFIG_INTERNAL_URL)
+        if internal_url:
+            log.debug("Switching to internal URL")
+            url = internal_url
 
     if not url:
         raise CkanConfigurationException("Missing `{}`".format(CONFIG_URL))
