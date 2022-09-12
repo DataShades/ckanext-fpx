@@ -81,7 +81,9 @@ def order_ticket(context, data_dict):
             item.setdefault("headers", {}).update(headers)
 
     if type_ == "url":
-        log.warning("`url` type of FPX tickets is deprecated. Use `zip` instead")
+        log.warning(
+            "`url` type of FPX tickets is deprecated. Use `zip` instead"
+        )
         type_ = "zip"
 
     data = {
