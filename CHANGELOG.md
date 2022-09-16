@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.3](https://github.com/DataShades/ckanext-fpx/compare/v0.5.2...v0.5.3) (2022-09-16)
+
+
+### Features
+
+* add IFpx interface ([914df36](https://github.com/DataShades/ckanext-fpx/commit/914df36a89aa4911d46cd427ad2b701c81f2ef47))
+
 ### [0.5.2](https://github.com/datashades/ckanext-fpx/compare/v0.5.1...v0.5.2) (2022-09-12)
 
 ### [0.5.1](https://github.com/datashades/ckanext-fpx/compare/v0.5.0...v0.5.1) (2022-08-08)
