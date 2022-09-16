@@ -30,12 +30,16 @@ def order_ticket(context, data_dict):
     items = data_dict["items"]
     options = data_dict.get("options", {})
 
-    normalizer: interfaces.IFpx = next(iter(PluginImplementations(interfaces.IFpx)))
+    normalizer: interfaces.IFpx = next(
+        iter(PluginImplementations(interfaces.IFpx))
+    )
 
     items, type_ = normalizer.fpx_normalize_items_and_type(items, type_)
 
     try:
-        user = tk.get_action("user_show")(context.copy(), {"id": context["user"]})
+        user = tk.get_action("user_show")(
+            context.copy(), {"id": context["user"]}
+        )
     except tk.ObjectNotFound:
         user = None
 
@@ -59,6 +63,7 @@ def order_ticket(context, data_dict):
         type_ = "zip"
 
     from icecream import ic
+
     ic(items)
 
     data = {

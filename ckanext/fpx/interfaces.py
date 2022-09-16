@@ -10,8 +10,7 @@ log = logging.getLogger(__name__)
 
 
 class IFpx(Interface):
-    """Extension point for FPX plugin.
-    """
+    """Extension point for FPX plugin."""
 
     def fpx_url_from_resource(self, resource: dict[str, Any]) -> Optional[str]:
         """Extract URL from the resource dictionary.
@@ -23,7 +22,9 @@ class IFpx(Interface):
         """
         return resource["url"]
 
-    def fpx_normalize_items_and_type(self, items: list[Any], type_: str) -> tuple[list[dict[str, Any]], str]:
+    def fpx_normalize_items_and_type(
+        self, items: list[Any], type_: str
+    ) -> tuple[list[dict[str, Any]], str]:
         """Transfrom list of items into valid payload for FPX ticket ordering process.
 
         Args:
@@ -40,14 +41,16 @@ class IFpx(Interface):
             items, type_ = self._fpx_resource_normalizer(items)
 
         items = [
-            item if isinstance(item, dict) else dict(url=item) for item in items
+            item if isinstance(item, dict) else dict(url=item)
+            for item in items
         ]
 
         return items, type_
 
-    def _fpx_package_normalizer(self, items: list[Any]) -> tuple[list[dict[str, Any]], str]:
-        """Normalize items when initial type is "package"
-        """
+    def _fpx_package_normalizer(
+        self, items: list[Any]
+    ) -> tuple[list[dict[str, Any]], str]:
+        """Normalize items when initial type is "package" """
         if not isinstance(items, list):
             log.warning(
                 "Passing items as scalar value when type set to 'package' is "
@@ -71,11 +74,16 @@ class IFpx(Interface):
 
         return items, "zip"
 
-    def _fpx_resource_normalizer(self, items: list[Any]) -> tuple[list[dict[str, Any]], str]:
-        """Normalize items when initial type is "resource"
-        """
+    def _fpx_resource_normalizer(
+        self, items: list[Any]
+    ) -> tuple[list[dict[str, Any]], str]:
+        """Normalize items when initial type is "resource" """
         items = [
-            {"url": self.fpx_url_from_resource(tk.get_action("resource_show")(None, {"id": r["id"]}))}
+            {
+                "url": self.fpx_url_from_resource(
+                    tk.get_action("resource_show")(None, {"id": r["id"]})
+                )
+            }
             for r in items
         ]
         return items, "zip"

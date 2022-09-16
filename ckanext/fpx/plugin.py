@@ -6,6 +6,7 @@ from ckanext.fpx.logic import action, auth, validators
 
 from .interfaces import IFpx
 
+
 class FpxPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
