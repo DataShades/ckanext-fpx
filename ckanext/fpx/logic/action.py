@@ -5,11 +5,13 @@ import base64
 import requests
 
 from urllib.parse import urljoin
+
 import ckan.plugins.toolkit as tk
+from ckan.plugins import PluginImplementations
 from ckan.logic import validate
 
 from . import schema
-from .. import utils
+from .. import utils, interfaces
 
 log = logging.getLogger(__name__)
 
@@ -28,42 +30,12 @@ def order_ticket(context, data_dict):
     items = data_dict["items"]
     options = data_dict.get("options", {})
 
-    if type_ == "package":
-        type_ = "zip"
-        if not isinstance(items, list):
-            log.warning(
-                "Passing items as scalar value when type set to 'package' is "
-                "deprecated. Use list instead."
-            )
-            items = [items]
+    normalizer: interfaces.IFpx = next(iter(PluginImplementations(interfaces.IFpx)))
 
-        fq_list = [
-            "{!q.op=OR}id:(%s)"
-            % " ".join(['"{}"'.format(item) for item in items])
-        ]
-        result = tk.get_action("package_search")(
-            None, {"fq_list": fq_list, "include_private": True}
-        )
-
-        items = [
-            {"url": r["url"], "path": pkg["name"]}
-            for pkg in result["results"]
-            for r in pkg["resources"]
-        ]
-
-    elif type_ == "resource":
-        type_ = "zip"
-        items = [
-            tk.get_action("resource_show")(None, {"id": r["id"]})["url"]
-            for r in items
-        ]
-
-    items = [
-        item if isinstance(item, dict) else dict(url=item) for item in items
-    ]
+    items, type_ = normalizer.fpx_normalize_items_and_type(items, type_)
 
     try:
-        user = tk.get_action("user_show")(None, {"id": context["user"]})
+        user = tk.get_action("user_show")(context.copy(), {"id": context["user"]})
     except tk.ObjectNotFound:
         user = None
 
@@ -71,7 +43,7 @@ def order_ticket(context, data_dict):
         if not user["apikey"]:
             log.info("Generating API Key for user %s", user["name"])
             user = tk.get_action("user_generate_apikey")(
-                {}, {"id": user["id"]}
+                context.copy(), {"id": user["id"]}
             )
 
         headers = {"Authorization": user["apikey"]}
@@ -85,6 +57,9 @@ def order_ticket(context, data_dict):
             "`url` type of FPX tickets is deprecated. Use `zip` instead"
         )
         type_ = "zip"
+
+    from icecream import ic
+    ic(items)
 
     data = {
         "type": type_,

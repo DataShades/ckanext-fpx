@@ -1,5 +1,4 @@
 from __future__ import annotations
-from math import fabs
 from flask import Blueprint
 import ckan.plugins.toolkit as tk
 
