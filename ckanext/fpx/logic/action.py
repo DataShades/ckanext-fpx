@@ -62,10 +62,6 @@ def order_ticket(context, data_dict):
         )
         type_ = "zip"
 
-    from icecream import ic
-
-    ic(items)
-
     data = {
         "type": type_,
         "items": base64.encodebytes(bytes(json.dumps(items), "utf8")),
