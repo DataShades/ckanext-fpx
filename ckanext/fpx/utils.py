@@ -34,6 +34,4 @@ def normalizer() -> interfaces.IFpx:
 
     The first plugins that implements IFpx interface will be used as normalizer.
     """
-    return next(
-        iter(PluginImplementations(interfaces.IFpx))
-    )
+    return next(iter(PluginImplementations(interfaces.IFpx)))

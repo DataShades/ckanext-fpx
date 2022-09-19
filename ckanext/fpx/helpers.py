@@ -31,9 +31,7 @@ def get_helpers():
 
 
 def fpx_no_queue() -> bool:
-    return tk.asbool(tk.config.get(
-        CONFIG_NO_QUEUE, DEFAULT_NO_QUEUE
-    ))
+    return tk.asbool(tk.config.get(CONFIG_NO_QUEUE, DEFAULT_NO_QUEUE))
 
 
 def fpx_service_url(*, internal: bool = False):
