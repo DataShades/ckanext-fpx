@@ -17,13 +17,23 @@ log = logging.getLogger(__name__)
 CONFIG_URL_LEGACY = "ckanext.fpx.service.url"
 CONFIG_URL = "fpx.service.url"
 CONFIG_INTERNAL_URL = "fpx.service.internal_url"
+CONFIG_NO_QUEUE = "fpx.service.no_queue"
+
+DEFAULT_NO_QUEUE = True
 
 
 def get_helpers():
     return {
         "fpx_service_url": fpx_service_url,
         "fpx_into_stream_url": fpx_into_stream_url,
+        "fpx_no_queue": fpx_no_queue,
     }
+
+
+def fpx_no_queue() -> bool:
+    return tk.asbool(tk.config.get(
+        CONFIG_NO_QUEUE, DEFAULT_NO_QUEUE
+    ))
 
 
 def fpx_service_url(*, internal: bool = False):

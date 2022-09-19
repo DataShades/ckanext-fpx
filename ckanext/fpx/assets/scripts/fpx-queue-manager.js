@@ -10,7 +10,8 @@ ckan.module("fpx-queue-manager", function ($) {
 
   return {
     options: {
-      serviceUrl: null,
+        serviceUrl: null,
+        noQueue: false
     },
     initialize: function () {
       this._onOrder = this._onOrder.bind(this);
@@ -20,8 +21,8 @@ ckan.module("fpx-queue-manager", function ($) {
 
       var url = this.options.serviceUrl;
       if (!url) {
-        log.error("service-url must be specified");
-        return;
+          log.error("[fpx:queue-manager] Service URL must be specified");
+          return;
       }
       if (url[url.length - 1] === "/") {
         this.options.serviceUrl = this.options.serviceUrl.slice(0, -1);
@@ -59,6 +60,18 @@ ckan.module("fpx-queue-manager", function ($) {
       );
     },
     _onTicket: function (data) {
+        const available = () => {
+          this.sandbox.publish(
+            ckan.TOPICS.FPX_TICKET_AVAILABLE,
+            this.options.serviceUrl + "/ticket/" + data.id + "/download"
+          );
+        }
+
+        if (this.options.noQueue) {
+            available();
+            return
+        }
+
       var ws = new WebSocket(
         this.options.serviceUrl.replace(/^http/, "ws") +
           "/ticket/" +
@@ -69,10 +82,7 @@ ckan.module("fpx-queue-manager", function ($) {
       function onMessage(e) {
         var msg = JSON.parse(e.data);
         if (msg.available) {
-          this.sandbox.publish(
-            ckan.TOPICS.FPX_TICKET_AVAILABLE,
-            this.options.serviceUrl + "/ticket/" + data.id + "/download"
-          );
+            available()
         } else {
           this.sandbox.publish(ckan.TOPICS.FPX_POSITION_UPDATED, msg.position);
         }

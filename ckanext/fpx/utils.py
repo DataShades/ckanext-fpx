@@ -1,6 +1,7 @@
 import logging
 import ckan.plugins.toolkit as tk
-
+from ckan.plugins import PluginImplementations
+from . import interfaces
 
 log = logging.getLogger(__name__)
 
@@ -26,3 +27,13 @@ def client_secret():
 
 def client_name():
     return tk.config.get(CONFIG_NAME)
+
+
+def normalizer() -> interfaces.IFpx:
+    """Return normalizer for FPX payload.
+
+    The first plugins that implements IFpx interface will be used as normalizer.
+    """
+    return next(
+        iter(PluginImplementations(interfaces.IFpx))
+    )

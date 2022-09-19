@@ -7,11 +7,10 @@ import requests
 from urllib.parse import urljoin
 
 import ckan.plugins.toolkit as tk
-from ckan.plugins import PluginImplementations
 from ckan.logic import validate
 
 from . import schema
-from .. import utils, interfaces
+from .. import utils
 
 log = logging.getLogger(__name__)
 
@@ -30,9 +29,7 @@ def order_ticket(context, data_dict):
     items = data_dict["items"]
     options = data_dict.get("options", {})
 
-    normalizer: interfaces.IFpx = next(
-        iter(PluginImplementations(interfaces.IFpx))
-    )
+    normalizer = utils.normalizer()
 
     items, type_ = normalizer.fpx_normalize_items_and_type(items, type_)
 
