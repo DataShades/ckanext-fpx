@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/DataShades/ckanext-fpx/compare/v0.5.4...v0.6.0) (2022-09-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* no_queue option
+
+### Features
+
+* no_queue option ([ff33a1a](https://github.com/DataShades/ckanext-fpx/commit/ff33a1ad6a1172e1ab3adf73531c5dda6e0fdab4))
+
 ### [0.5.4](https://github.com/DataShades/ckanext-fpx/compare/v0.5.3...v0.5.4) (2022-09-16)
 
 ### [0.5.3](https://github.com/DataShades/ckanext-fpx/compare/v0.5.2...v0.5.3) (2022-09-16)
