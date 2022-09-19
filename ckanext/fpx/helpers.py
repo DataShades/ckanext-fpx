@@ -31,10 +31,27 @@ def get_helpers():
 
 
 def fpx_no_queue() -> bool:
+    """Start downloads immediately, without waiting in queue.
+
+    Requires FPX service running with `FPX_NO_QUEUE = True` option(default from
+    v0.4.0).
+
+    """
     return tk.asbool(tk.config.get(CONFIG_NO_QUEUE, DEFAULT_NO_QUEUE))
 
 
-def fpx_service_url(*, internal: bool = False):
+def fpx_service_url(*, internal: bool = False) -> str:
+    f"""Return the URL of FPX service.
+
+    Keyword Args:
+
+        internal(optional): make an attempt to return value of
+        `{CONFIG_INTERNAL_URL}` option. This feature can be used internally(for
+        ticket ordering) in order to bypass load-balancer and access FPX
+        service directly. When `{CONFIG_INTERNAL_URL}` is empty, normal
+        URL(`{CONFIG_URL}`) is returned instead.
+
+    """
     url = tk.config.get(CONFIG_URL)
     if not url:
         url = tk.config.get(CONFIG_URL_LEGACY)
@@ -57,6 +74,19 @@ def fpx_service_url(*, internal: bool = False):
 
 
 def fpx_into_stream_url(url: str) -> Optional[str]:
+    """Turn arbitrary link into URL to downloadable stream.
+
+    In this way any URL that is accessible only from FPX service can be proxied
+    to the client through FPX.
+
+    Args:
+        url: Download URL
+
+    Returns:
+        URL to the FPX endpoint that streams content from the Download URL.
+        None, if client's name or secret are missing.
+
+    """
     name = utils.client_name()
     secret = utils.client_secret()
 
