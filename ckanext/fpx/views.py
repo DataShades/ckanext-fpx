@@ -14,7 +14,7 @@ fpx = Blueprint("fpx", __name__)
 
 @fpx.route("/dataset/<id>/resource/<resource_id>/fpx")
 def resource_download(id: str, resource_id: str):
-    normalizer = utils.normalizer()
+    normalizer = utils.get_normalizer()
 
     try:
         res = tk.get_action("resource_show")({}, {"id": resource_id})

@@ -29,7 +29,7 @@ def client_name():
     return tk.config.get(CONFIG_NAME)
 
 
-def normalizer() -> interfaces.IFpx:
+def get_normalizer() -> interfaces.IFpx:
     """Return normalizer for FPX payload.
 
     The first plugins that implements IFpx interface will be used as normalizer.

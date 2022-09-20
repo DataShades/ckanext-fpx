@@ -29,7 +29,7 @@ def order_ticket(context, data_dict):
     items = data_dict["items"]
     options = data_dict.get("options", {})
 
-    normalizer = utils.normalizer()
+    normalizer = utils.get_normalizer()
 
     items, type_ = normalizer.fpx_normalize_items_and_type(items, type_)
 
@@ -78,5 +78,6 @@ def order_ticket(context, data_dict):
     except ValueError:
         log.exception(f"FPX ticket order: {resp.content}")
         raise
+
 
     raise tk.ValidationError(errors)
