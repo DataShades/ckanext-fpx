@@ -5,7 +5,7 @@ import base64
 import requests
 
 from urllib.parse import urljoin
-
+from ckan.lib import redis
 import ckan.plugins.toolkit as tk
 from ckan.logic import validate
 
@@ -20,6 +20,22 @@ def get_actions():
         "fpx_order_ticket": order_ticket,
     }
 
+
+def _get_token(name):
+    """Return API token for username
+    """
+    conn = redis.connect_to_redis()
+    key = f"fpx:token:{name}"
+    token = conn.get(key)
+
+    if not token:
+        log.info("Generating API Token for user %s", name)
+        token = tk.get_action("api_token_create")(
+            {"user": name}, {"user": name, "name": "File downloads"}
+        )["token"]
+        conn.set(key, token)
+
+    return token
 
 @validate(schema.order_ticket)
 def order_ticket(context, data_dict):
@@ -41,13 +57,9 @@ def order_ticket(context, data_dict):
         user = None
 
     if user:
-        if not user["apikey"]:
-            log.info("Generating API Key for user %s", user["name"])
-            user = tk.get_action("user_generate_apikey")(
-                context.copy(), {"id": user["id"]}
-            )
+        token = _get_token(user["name"])
 
-        headers = {"Authorization": user["apikey"]}
+        headers = {"Authorization": token}
         for item in items:
             if not tk.h.url_is_local(item["url"]):
                 continue
