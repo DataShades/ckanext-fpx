@@ -34,6 +34,8 @@ def _get_token(name):
             {"user": name}, {"user": name, "name": "File downloads"}
         )["token"]
         conn.set(key, token)
+    else:
+        token = token.decode()
 
     return token
 
