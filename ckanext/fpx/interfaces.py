@@ -2,7 +2,7 @@ from __future__ import annotations
 import logging
 
 from typing import Any, Optional
-
+from ckan.lib.search.query import solr_literal
 import ckan.plugins.toolkit as tk
 from ckan.plugins.interfaces import Interface
 
@@ -59,11 +59,13 @@ class IFpx(Interface):
             items = [items]
 
         fq_list = [
-            "{!q.op=OR}id:(%s)"
-            % " ".join(['"{}"'.format(item) for item in items])
+            "id:({})".format(
+                " OR ".join([solr_literal(item) for item in items])
+            )
         ]
+
         result = tk.get_action("package_search")(
-            None, {"fq_list": fq_list, "include_private": True}
+            {}, {"fq_list": fq_list, "include_private": True}
         )
 
         items = [
@@ -81,7 +83,7 @@ class IFpx(Interface):
         items = [
             {
                 "url": self.fpx_url_from_resource(
-                    tk.get_action("resource_show")(None, {"id": r["id"]})
+                    tk.get_action("resource_show")({}, {"id": r["id"]})
                 )
             }
             for r in items
