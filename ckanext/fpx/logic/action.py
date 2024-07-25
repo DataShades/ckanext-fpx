@@ -55,7 +55,7 @@ def order_ticket(context, data_dict):
         user = tk.get_action("user_show")(
             context.copy(), {"id": context["user"]}
         )
-    except tk.ObjectNotFound:
+    except (tk.ObjectNotFound, tk.NotAuthorized):
         user = None
 
     if user:
