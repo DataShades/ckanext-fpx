@@ -1,3 +1,41 @@
-[tool.black]
-preview = true
-line-length = 79
+[build-system]
+requires = [ "setuptools",]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ckanext-fpx"
+version = "0.6.4.post1"
+classifiers = [ "Development Status :: 4 - Beta", "Programming Language :: Python :: 3.7", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10",]
+keywords = [ "CKAN",]
+requires-python = ">=3.7"
+dependencies = [ "pyjwt",]
+authors = [
+    {name = "DataShades", email = "datashades@linkdigital.com.au"},
+    {name = "Sergey Motornyuk", email = "sergey.motornyuk@linkdigital.com.au"},
+]
+maintainers = [
+    {name = "DataShades", email = "datashades@linkdigital.com.au"},
+]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.license]
+text = "AGPL"
+
+[project.urls]
+Homepage = "https://github.com/DataShades/ckanext-fpx"
+
+[project.entry-points."ckan.plugins"]
+fpx = "ckanext.fpx.plugin:FpxPlugin"
+
+[project.entry-points."babel.extractors"]
+ckan = "ckan.lib.extract:extract_ckan"
+
+[tool.pytest.ini_options]
+filterwarnings = [ "ignore::sqlalchemy.exc.SADeprecationWarning", "ignore::sqlalchemy.exc.SAWarning", "ignore::DeprecationWarning",]
+addopts = "--ckan-ini test.ini"
+
+[tool.setuptools.packages]
+find = {}
